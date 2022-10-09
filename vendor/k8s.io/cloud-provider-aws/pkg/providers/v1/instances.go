@@ -46,10 +46,10 @@ func (i InstanceID) awsString() *string {
 
 // KubernetesInstanceID represents the id for an instance in the kubernetes API;
 // the following form
-//  * aws:///<zone>/<awsInstanceId>
-//  * aws:////<awsInstanceId>
-//  * aws:///<zone>/fargate-<eni-ip-address>
-//  * <awsInstanceId>
+//   - aws:///<zone>/<awsInstanceId>
+//   - aws:////<awsInstanceId>
+//   - aws:///<zone>/fargate-<eni-ip-address>
+//   - <awsInstanceId>
 type KubernetesInstanceID string
 
 // MapToAWSInstanceID extracts the InstanceID from the KubernetesInstanceID
@@ -78,7 +78,7 @@ func (name KubernetesInstanceID) MapToAWSInstanceID() (InstanceID, error) {
 
 	// We sanity check the resulting volume; the two known formats are
 	// i-12345678 and i-12345678abcdef01
-	if awsID == "" || !(awsInstanceRegMatch.MatchString(awsID) || isFargateNode(awsID)) {
+	if awsID == "" || !(awsInstanceRegMatch.MatchString(awsID) || IsFargateNode(awsID)) {
 		return "", fmt.Errorf("Invalid format for AWS instance (%s)", name)
 	}
 
